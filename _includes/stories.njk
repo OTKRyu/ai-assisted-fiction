@@ -1,0 +1,8 @@
+---
+layout: base.njk
+---
+{% if page.inputPath.endsWith("/index.md") %}
+  {% include "story-body.njk" %}
+{% else %}
+  {% include "chapter-body.njk" %}
+{% endif %}

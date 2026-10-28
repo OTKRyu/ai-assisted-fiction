@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ title }}{% if title != site.name %} | {{ site.name }}{% endif %}</title>
+  {% set summary = description or site.description %}
+  <meta name="description" content="{{ summary }}">
+  <meta property="og:type" content="{% if layout == 'base.njk' %}website{% else %}article{% endif %}">
+  <meta property="og:url" content="{{ site.url }}{{ page.url }}">
+  <meta property="og:title" content="{{ title }}">
+  <meta property="og:description" content="{{ summary }}">
+  <meta property="og:site_name" content="{{ site.name }}">
+  <meta property="og:locale" content="ko_KR">
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <header>
+    <a class="brand" href="/">{{ site.name }}</a>
+  </header>
+  <main>
+    {{ content | safe }}
+  </main>
+  <footer>
+    <p>이 사이트의 소설은 AI 의 보조를 받아 썼습니다.</p>
+    <a href="https://github.com/OTKRyu">GitHub</a>
+  </footer>
+</body>
+</html>

@@ -1,0 +1,17 @@
+{% set story = collections.stories | storyOf(page) %}
+{% set chapters = collections.chapters | chaptersOf(page) %}
+{% set i = chapters | indexOfPage(page) %}
+<article class="story">
+  <header class="story-head">
+    <p class="meta"><a href="{{ story.url }}">{{ story.data.title }}</a></p>
+    <h1>{{ title }}</h1>
+  </header>
+  <div class="prose">
+    {{ content | safe }}
+  </div>
+  <nav class="chapter-nav">
+    {% if i > 0 %}<a href="{{ chapters[i - 1].url }}">← {{ chapters[i - 1].data.title }}</a>{% else %}<span></span>{% endif %}
+    <a href="{{ story.url }}">목차</a>
+    {% if i < chapters.length - 1 %}<a href="{{ chapters[i + 1].url }}">{{ chapters[i + 1].data.title }} →</a>{% else %}<span></span>{% endif %}
+  </nav>
+</article>

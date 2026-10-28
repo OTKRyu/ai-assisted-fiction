@@ -1,0 +1,18 @@
+---
+layout: base.njk
+title: AI Assisted Fiction
+---
+<p class="intro">{{ site.description }}</p>
+{% if collections.stories.length %}
+<ul class="story-list">
+  {% for story in collections.stories %}
+  <li>
+    <a href="{{ story.url }}">{{ story.data.title }}</a>
+    {% if story.data.description %}<p>{{ story.data.description }}</p>{% endif %}
+    <time datetime="{{ story.date | isoDate }}">{{ story.date | readableDate }}</time>
+  </li>
+  {% endfor %}
+</ul>
+{% else %}
+<p>아직 올린 작품이 없습니다.</p>
+{% endif %}

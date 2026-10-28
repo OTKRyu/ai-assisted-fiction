@@ -1,0 +1,18 @@
+{% set chapters = collections.chapters | chaptersOf(page) %}
+<article class="story">
+  <header class="story-head">
+    <h1>{{ title }}</h1>
+    <p class="meta"><time datetime="{{ page.date | isoDate }}">{{ page.date | readableDate }}</time>{% if chapters.length %} · {{ chapters.length }}장{% endif %}</p>
+    {% if cover %}<img class="cover" src="{{ cover }}" alt="{{ title }} 표지">{% endif %}
+  </header>
+  <div class="prose">
+    {{ content | safe }}
+  </div>
+  {% if chapters.length %}
+  <ol class="chapter-list">
+    {% for chapter in chapters %}
+    <li><a href="{{ chapter.url }}">{{ chapter.data.title }}</a></li>
+    {% endfor %}
+  </ol>
+  {% endif %}
+</article>
