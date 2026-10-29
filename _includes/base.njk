@@ -13,8 +13,9 @@
   <meta property="og:site_name" content="{{ site.name }}">
   <meta property="og:locale" content="ko_KR">
   <link rel="stylesheet" href="/style.css">
+  {% if storyStyle %}<link rel="stylesheet" href="{{ storyStyle }}">{% endif %}
 </head>
-<body>
+<body{% if storySlug %} class="story-{{ storySlug }}"{% endif %}>
   <header>
     <a class="brand" href="/">{{ site.name }}</a>
   </header>

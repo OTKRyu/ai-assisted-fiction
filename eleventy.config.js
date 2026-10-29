@@ -8,6 +8,8 @@ export default function (eleventyConfig) {
   eleventyConfig.addPassthroughCopy("style.css");
   // 작품 폴더 안의 삽화는 같은 경로로 복사
   eleventyConfig.addPassthroughCopy("stories/**/*.{webp,avif,png,jpg,jpeg,gif,svg}");
+  // 작품별 스타일과 글꼴
+  eleventyConfig.addPassthroughCopy("stories/**/*.{css,woff2}");
 
   for (const file of ["README.md", "AGENTS.md", "CLAUDE.md"]) {
     eleventyConfig.ignores.add(file);
