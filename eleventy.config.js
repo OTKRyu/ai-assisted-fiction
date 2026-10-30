@@ -11,6 +11,36 @@ export default function (eleventyConfig) {
   // 작품별 스타일과 글꼴
   eleventyConfig.addPassthroughCopy("stories/**/*.{css,woff2}");
 
+  // 작품 본문의 `<!-- 25 -->` 같은 장면 표시를 <section class="scene" id="s25"> 로 감싼다.
+  // 번호 뒤 단어는 클래스가 된다(`<!-- 25 vote -->` → class="scene vote").
+  // 장면은 다음 표시, `---`, 문서 끝에서 닫히고, 작품 CSS 가 장면마다 연출을 줄 수 있다.
+  eleventyConfig.addPreprocessor("scenes", "md", (data, content) => {
+    if (!data.page.inputPath.startsWith("./stories/")) return content;
+    const marker = /^<!--\s*(\d+)((?:\s+[\w-]+)*)\s*-->$/;
+    const out = [];
+    let open = false;
+    const close = () => {
+      if (open) out.push("", "</section>", "");
+      open = false;
+    };
+    for (const line of content.split(/\r?\n/)) {
+      const m = line.trim().match(marker);
+      if (m) {
+        close();
+        const classes = ["scene", ...m[2].trim().split(/\s+/).filter(Boolean)].join(" ");
+        out.push(`<section class="${classes}" id="s${m[1]}">`, "");
+        open = true;
+      } else if (open && line.trim() === "---") {
+        close();
+        out.push(line);
+      } else {
+        out.push(line);
+      }
+    }
+    close();
+    return out.join("\n");
+  });
+
   for (const file of ["README.md", "AGENTS.md", "CLAUDE.md"]) {
     eleventyConfig.ignores.add(file);
   }

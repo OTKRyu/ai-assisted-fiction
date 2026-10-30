@@ -59,6 +59,28 @@ cover: "/stories/first-snow/images/cover.webp" # 선택
 - 글꼴은 작품 폴더에 `.woff2` 로 두고 `style.css` 에서 상대 경로로 부른다.
 - 구조까지 다른 작품은 전용 레이아웃을 `_includes/` 에 만들고 frontmatter 의 `layout` 으로 지정한다.
 
+### 장면 연출
+
+본문에 `<!-- 번호 -->` 를 한 줄로 쓰면 그 자리부터 다음 표시, `---`, 문서 끝까지가 장면 하나로 묶인다(`eleventy.config.js` 의 `scenes` 전처리).
+
+```md
+<!-- 25 vote -->
+
+결국 표결 시간이 되었다. ...
+
+---
+```
+
+```html
+<section class="scene vote" id="s25"> ... </section>
+<hr>
+```
+
+- 번호는 `id="s번호"` 가 되고, 번호 뒤 단어는 클래스가 된다. 화면에는 보이지 않는다.
+- 작품 `style.css` 에서 `#s25`, `.scene.vote`, `#s22 ~ .scene`(22절 이후 전부) 같은 선택자로 장면마다 배경, 글꼴, 색, 애니메이션을 준다.
+- 클라이언트 JS 는 쓰지 않으므로 움직임은 CSS 로만 한다. 장면이 화면에 들어올 때 시작하는 효과는 `animation-timeline: view()` 를 쓰고, 지원하지 않는 브라우저에서도 글이 보이도록 `@supports` 안에 둔다.
+- 문단 하나에만 효과를 줄 때는 본문에 HTML 을 직접 쓴다(`<p class="whisper">…</p>`).
+
 ## 본문 작성 규칙
 
 - 제목은 레이아웃이 `title` 로 출력하므로 본문에는 `# 제목` 을 쓰지 않는다.
